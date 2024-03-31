@@ -1,0 +1,5 @@
+.main-editor {
+  @media screen and (max-width: 1050px) {
+    margin-top: 4rem;
+  }
+}

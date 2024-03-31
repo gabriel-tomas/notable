@@ -1,0 +1,10 @@
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  gap: 1rem;
+}
+
+.main-layout > * {
+  flex: 1;
+}
