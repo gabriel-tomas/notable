@@ -10,8 +10,8 @@ function App() {
       <PersistGate persistor={persistor}>
         <Editor />
       </PersistGate>
-    </Provider> 
+    </Provider>
   );
 }
 
-export default App
+export default App;

@@ -7,13 +7,10 @@ function App() {
     holder: 'editor',
     tools: {
       header: Header,
-    }
+    },
   });
-  
 
-  return (
-    <div id="editor"></div>
-  );
+  return <div id="editor"></div>;
 }
 
 export default App;
