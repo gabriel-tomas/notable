@@ -1,14 +1,13 @@
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+import { Reducer, Action } from 'redux';
 
-export default (reducers: any) => {
+export default (reducers: Reducer<unknown, Action>) => {
   const persistedReducers = persistReducer(
     {
       key: 'Note-App',
       storage,
-      whitelist: [
-        'example',
-      ],
+      whitelist: ['menu'],
     },
     reducers,
   );
