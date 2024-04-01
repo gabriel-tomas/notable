@@ -7,23 +7,21 @@ import {
   BtnMenuProtocol,
   BtnDispatcherProtocol,
   BtnDispatcher,
+  BtnNavProtocol,
 } from './interfaces';
 
 import './style.css';
 
-const handleOpenMenu = (
-  event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  dispatch: BtnDispatcher,
-) => {
-  const el = event.currentTarget as HTMLButtonElement;
-  el?.classList.add('desactive');
+const handleOpenMenu = (dispatch: BtnDispatcher) => {
+  const nav = document.querySelector('.main-nav');
+  nav?.classList.add('desactive');
   document.getElementById('menu')?.classList.add('active');
   dispatch(menuActions.setMenuIsOpen());
 };
 
 const handleCloseMenu = (dispatch: BtnDispatcher) => {
-  const btnOpenMenu = document.querySelector('.btn-open-menu');
-  btnOpenMenu?.classList.remove('desactive');
+  const nav = document.querySelector('.main-nav');
+  nav?.classList.remove('desactive');
   document.getElementById('menu')?.classList.remove('active');
   dispatch(menuActions.setMenuIsClosed());
 };
@@ -31,9 +29,19 @@ const handleCloseMenu = (dispatch: BtnDispatcher) => {
 const BtnMenu = (
   props: BtnMenuProtocol & BtnDispatcherProtocol,
 ): JSX.Element => (
-  <button className={props.className} onClick={props.handleFunc}>
+  <button
+    className={props.className}
+    onClick={() => props.handleFunc(props.dispatchMenuState)}
+  >
     menu
     <props.ArrowComponent />
+  </button>
+);
+
+const BtnNav = (props: BtnNavProtocol): JSX.Element => (
+  <button className={props.className} onClick={props.handleFunc}>
+    {props.textInside}
+    <GoChevronRight />
   </button>
 );
 
@@ -56,12 +64,16 @@ export default function SideMenu() {
 
   return (
     <>
-      <BtnMenu
-        className="btn-open-menu"
-        handleFunc={(e) => handleOpenMenu(e, dispatch)}
-        ArrowComponent={GoChevronRight}
-        dispatchMenuState={dispatch}
-      />
+      <div className="main-nav">
+        <BtnMenu
+          className="btn-nav btn-open-menu"
+          handleFunc={() => handleOpenMenu(dispatch)}
+          ArrowComponent={GoChevronRight}
+          dispatchMenuState={dispatch}
+        />
+        <BtnNav className="btn-nav" handleFunc={() => {}} textInside="buscar" />
+        <BtnNav className="btn-nav" handleFunc={() => {}} textInside="sobre" />
+      </div>
       <div id="menu">
         <Header dispatchMenuState={dispatch} />
         <div className="users-pages">

@@ -1,4 +1,7 @@
 .main-editor {
+  width: 100%;
+  transition: .15s margin-top;
+
   @media screen and (max-width: 1050px) {
     margin-top: 4rem;
     &.menu-opened {
