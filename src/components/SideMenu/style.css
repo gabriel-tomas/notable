@@ -1,3 +1,10 @@
+.main-nav-back-activator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1.6rem;
+}
+
 .main-nav {
   z-index: 21;
   position: absolute;
@@ -7,15 +14,44 @@
   flex-direction: column;
   gap: .6rem;
   background-color: var(--primary4);
-  padding: .6rem;
+  padding: .8rem;
   border-radius: .6rem;
+  width: 25px;
+  height: 25px;
+  max-width: 0%;
+  max-height: 0%;
+  overflow: hidden;
+  transition: .25s all;
+  opacity: .7;
+
+  &.active {
+    width: fit-content;
+    height: fit-content;
+    /* min-width: fit-content;
+    min-height: fit-content; */
+    max-width: 20%;
+    max-height: 30%;
+    opacity: 1;
+  }
 
   @media screen and (max-width: 1050px) {
     flex-direction: row;
+
+    &.active {
+      max-width: 50%;
+      max-height: 10%;
+    }
   }
 
   @media screen and (max-width: 555px) {
-    width: calc(100% - 1.2rem - .8rem);
+    & {
+      width: calc(100% - 1.2rem - .8rem);
+      height: fit-content;
+      min-width: calc(100% - 1.2rem - .8rem);
+      max-height: fit-content;
+      overflow: unset;
+      opacity: 1;
+    }
 
     .btn-nav {
       width: 100%;

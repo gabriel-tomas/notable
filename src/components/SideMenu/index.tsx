@@ -26,6 +26,16 @@ const handleCloseMenu = (dispatch: BtnDispatcher) => {
   dispatch(menuActions.setMenuIsClosed());
 };
 
+const handleOpenNav = () => {
+  const nav = document.querySelector('.main-nav');
+  nav?.classList.add('active');
+};
+
+const handleCloseNav = () => {
+  const nav = document.querySelector('.main-nav');
+  nav?.classList.remove('active');
+};
+
 const BtnMenu = (
   props: BtnMenuProtocol & BtnDispatcherProtocol,
 ): JSX.Element => (
@@ -64,7 +74,16 @@ export default function SideMenu() {
 
   return (
     <>
-      <div className="main-nav">
+      <div
+        className="main-nav-back-activator"
+        onMouseOver={handleOpenNav}
+        onMouseLeave={handleCloseNav}
+      ></div>
+      <div
+        className="main-nav"
+        onMouseOver={handleOpenNav}
+        onMouseLeave={handleCloseNav}
+      >
         <BtnMenu
           className="btn-nav btn-open-menu"
           handleFunc={() => handleOpenMenu(dispatch)}
