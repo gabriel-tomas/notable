@@ -93,7 +93,7 @@
   }
 }
 
-#menu {
+#pages {
   flex: .5;
   color: var(--white-text);
   background-color: var(--primary);
@@ -186,7 +186,7 @@
   }
 }
 
-#menu.active {
+#pages.active {
   display: flex;
   animation: increaseToRight .15s;
 }

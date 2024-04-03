@@ -12,17 +12,17 @@ import {
 
 import './style.css';
 
-const handleOpenMenu = (dispatch: BtnDispatcher) => {
+const handleOpenPages = (dispatch: BtnDispatcher) => {
   const nav = document.querySelector('.main-nav');
   nav?.classList.add('desactive');
-  document.getElementById('menu')?.classList.add('active');
+  document.getElementById('pages')?.classList.add('active');
   dispatch(menuActions.setMenuIsOpen());
 };
 
-const handleCloseMenu = (dispatch: BtnDispatcher) => {
+const handleClosePages = (dispatch: BtnDispatcher) => {
   const nav = document.querySelector('.main-nav');
   nav?.classList.remove('desactive');
-  document.getElementById('menu')?.classList.remove('active');
+  document.getElementById('pages')?.classList.remove('active');
   dispatch(menuActions.setMenuIsClosed());
 };
 
@@ -61,7 +61,7 @@ const Header = (props: BtnDispatcherProtocol) => {
       <h1>Minhas páginas</h1>
       <BtnMenu
         className="btn-close-menu"
-        handleFunc={() => handleCloseMenu(props.dispatchMenuState)}
+        handleFunc={() => handleClosePages(props.dispatchMenuState)}
         ArrowComponent={GoChevronLeft}
         dispatchMenuState={props.dispatchMenuState}
       />
@@ -86,14 +86,14 @@ export default function SideMenu() {
       >
         <BtnMenu
           className="btn-nav btn-open-menu"
-          handleFunc={() => handleOpenMenu(dispatch)}
+          handleFunc={() => handleOpenPages(dispatch)}
           ArrowComponent={GoChevronRight}
           dispatchMenuState={dispatch}
         />
         <BtnNav className="btn-nav" handleFunc={() => {}} textInside="buscar" />
         <BtnNav className="btn-nav" handleFunc={() => {}} textInside="sobre" />
       </div>
-      <div id="menu">
+      <div id="pages">
         <Header dispatchMenuState={dispatch} />
         <div className="users-pages">
           <button className="btn-create-page">
