@@ -1,11 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { get } from 'lodash';
 import { GoChevronRight, GoChevronLeft, GoPlus } from 'react-icons/go';
 
 import * as menuActions from '../../store/modules/menu/actions';
 
+import { GlobalState } from '../../store/modules/interfaces';
 import {
   BtnMenuProtocol,
-  BtnDispatcherProtocol,
+  DispatcherProtocol,
   BtnDispatcher,
   BtnNavProtocol,
 } from './interfaces';
@@ -36,12 +38,10 @@ const handleCloseNav = () => {
   nav?.classList.remove('active');
 };
 
-const BtnMenu = (
-  props: BtnMenuProtocol & BtnDispatcherProtocol,
-): JSX.Element => (
+const BtnMenu = (props: BtnMenuProtocol & DispatcherProtocol): JSX.Element => (
   <button
     className={props.className}
-    onClick={() => props.handleFunc(props.dispatchMenuState)}
+    onClick={() => props.handleFunc(props.dispatcher)}
   >
     menu
     <props.ArrowComponent />
@@ -55,17 +55,42 @@ const BtnNav = (props: BtnNavProtocol): JSX.Element => (
   </button>
 );
 
-const Header = (props: BtnDispatcherProtocol) => {
+const Header = (props: DispatcherProtocol) => {
   return (
     <header>
       <h1>Minhas páginas</h1>
       <BtnMenu
         className="btn-close-menu"
-        handleFunc={() => handleClosePages(props.dispatchMenuState)}
+        handleFunc={() => handleClosePages(props.dispatcher)}
         ArrowComponent={GoChevronLeft}
-        dispatchMenuState={props.dispatchMenuState}
+        dispatcher={props.dispatcher}
       />
     </header>
+  );
+};
+
+const PagesModal = (props: DispatcherProtocol) => {
+  const pages = useSelector((state: GlobalState) => state.pages.pages);
+
+  console.log(pages);
+
+  return (
+    <div id="pages">
+      <Header dispatcher={props.dispatcher} />
+      <div className="users-pages">
+        <button className="btn-create-page">
+          Criar nova página <GoPlus />
+        </button>
+        {pages.map(
+          (page) =>
+            get(page, 'content.blocks.length', 0) > 0 && (
+              <button key={page.id}>
+                {get(page, 'content.blocks[0].data.text', null)}
+              </button>
+            ),
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -88,19 +113,12 @@ export default function SideMenu() {
           className="btn-nav btn-open-menu"
           handleFunc={() => handleOpenPages(dispatch)}
           ArrowComponent={GoChevronRight}
-          dispatchMenuState={dispatch}
+          dispatcher={dispatch}
         />
         <BtnNav className="btn-nav" handleFunc={() => {}} textInside="buscar" />
         <BtnNav className="btn-nav" handleFunc={() => {}} textInside="sobre" />
       </div>
-      <div id="pages">
-        <Header dispatchMenuState={dispatch} />
-        <div className="users-pages">
-          <button className="btn-create-page">
-            Criar nova página <GoPlus />
-          </button>
-        </div>
-      </div>
+      <PagesModal dispatcher={dispatch} />
     </>
   );
 }

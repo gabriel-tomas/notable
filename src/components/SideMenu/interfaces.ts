@@ -14,8 +14,8 @@ export interface BtnNavProtocol {
   handleFunc: () => void;
 }
 
-export interface BtnDispatcherProtocol {
-  dispatchMenuState: Dispatch<UnknownAction>;
+export interface DispatcherProtocol {
+  dispatcher: Dispatch<UnknownAction>;
 }
 
 export type BtnDispatcher = Dispatch<UnknownAction>;
