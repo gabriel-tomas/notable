@@ -23,6 +23,8 @@ function App() {
   const [editor, setEditor] = useState<EditorJS | null>(null);
   const [currentPageID, setCurrentPageId] = useState('');
   const [currentPageContent, setCurrentPageContent] = useState({});
+  const [userIsTyping, setUserIsTyping] = useState(false);
+  const [timeNotTyping, setTimeNotTyping] = useState<number | null>(null);
   const pages = useSelector((state: GlobalState) => state.pages.pages);
 
   FirstStart(pages, setCurrentPageId, setCurrentPageContent);
@@ -36,7 +38,7 @@ function App() {
 
   useEffect(() => {
     if (!currentPageID) return;
-    console.log(editor);
+    /*     console.log(editor); */
     if (!editor && Object.keys(currentPageContent).length > 0) {
       setEditor(
         new EditorJS({
@@ -60,7 +62,7 @@ function App() {
       );
     }
 
-    console.log(currentPageID, currentPageContent);
+    /* console.log(currentPageID, currentPageContent); */
 
     return () => {
       editor && editor.destroy();
@@ -73,7 +75,7 @@ function App() {
         .save()
         .then((outputData) => {
           if (!currentPageID) {
-            console.log('ocorreu um erro ao tentar salvar, não tem ID');
+            console.log("there's not ID");
           }
           dispatch(
             pagesActions.setUpdatePageContent({
@@ -88,12 +90,29 @@ function App() {
     }
   };
 
+  const doneTyping = () => {
+    setUserIsTyping(false);
+    setTimeNotTyping(null);
+    handleSave();
+  };
+
+  const handleInputChanging = () => {
+    setUserIsTyping(true);
+
+    if (timeNotTyping) {
+      clearTimeout(timeNotTyping);
+    }
+
+    setTimeNotTyping(setTimeout(doneTyping, 400));
+  };
+
   return (
     <div
       id="editor"
       className={`main-editor ${menuIsOpen ? 'menu-opened' : ''}`}
+      onInput={handleInputChanging}
     >
-      <button onClick={handleSave}>salvar</button>
+      {/* <button onClick={handleSave}>salvar</button> */}
     </div>
   );
 }
