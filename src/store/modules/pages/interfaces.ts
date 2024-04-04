@@ -3,6 +3,7 @@ import { OutputBlockData } from '@editorjs/editorjs/types/data-formats/output-da
 export interface ActionProtocol {
   type: string;
   payload: PagePayload;
+  [key: string]: unknown;
 }
 
 export interface PageIDPayload {
@@ -16,7 +17,7 @@ export interface PageContentPayload {
 export interface PagePayload extends PageIDPayload, PageContentPayload {}
 
 export interface ArticleDataProtocol {
-  blocks: OutputBlockData<string, unknown>[];
+  blocks: OutputBlockData<string, object>[];
   time: number;
   version: string;
 }
