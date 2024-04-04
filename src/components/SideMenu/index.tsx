@@ -116,11 +116,13 @@ export default function SideMenu() {
         className="main-nav-back-activator"
         onMouseOver={handleOpenNav}
         onMouseLeave={handleCloseNav}
+        onClick={handleOpenNav}
       ></div>
       <div
         className="main-nav"
         onMouseOver={handleOpenNav}
         onMouseLeave={handleCloseNav}
+        onClick={handleOpenNav}
       >
         <BtnMenu
           className="btn-nav btn-open-menu"

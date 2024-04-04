@@ -44,6 +44,9 @@
     max-height: 30%;
     opacity: 1;
     filter: invert(0%);
+    .btn-nav {
+      display: flex;
+    }
   }
 
   @media screen and (max-width: 950px) {
@@ -82,7 +85,7 @@
   }
 
   .btn-nav {
-    display: flex;
+    display: none;
     align-items: center;
     color: var(--white-text);
     height: fit-content;
