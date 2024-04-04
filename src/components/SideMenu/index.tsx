@@ -7,6 +7,8 @@ import * as menuActions from '../../store/modules/menu/actions';
 import * as pagesActions from '../../store/modules/pages/actions';
 import * as currentPageID from '../../store/modules/currentPageID/actions';
 
+import specialCharactersChange from '../../utils/specialCharactersChange';
+
 import { GlobalState } from '../../store/modules/interfaces';
 import {
   BtnMenuProtocol,
@@ -95,7 +97,9 @@ const PagesModal = (props: DispatcherProtocol) => {
         </button>
         {pages.map((page) => (
           <button key={page.id} onClick={() => handleChangePage(page.id)}>
-            {get(page, 'content.blocks[0].data.text', null) || 'Untitled'}
+            {specialCharactersChange(
+              get(page, 'content.blocks[0].data.text', null),
+            ) || 'Untitled'}
           </button>
         ))}
       </div>
