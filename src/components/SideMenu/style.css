@@ -3,11 +3,22 @@
   top: 0;
   left: 0;
   padding: 1.6rem;
+
+  @media screen and (max-width: 950px) {
+    & {
+      right: 0;
+      left: unset;
+    }
+
+    &.active {
+      max-width: 100%;
+    }
+  }
 }
 
 .main-nav {
   z-index: 21;
-  position: absolute;
+  position: fixed;
   top: 1rem;
   left: 1rem;
   display: flex;
@@ -23,23 +34,28 @@
   overflow: hidden;
   transition: .25s all;
   opacity: .7;
+  filter: invert(50%);
+  box-shadow: 0 0 12px rgba(0, 0, 0, .4);
 
   &.active {
     width: fit-content;
     height: fit-content;
-    /* min-width: fit-content;
-    min-height: fit-content; */
     max-width: 20%;
     max-height: 30%;
     opacity: 1;
+    filter: invert(0%);
   }
 
-  @media screen and (max-width: 1050px) {
-    flex-direction: row;
+  @media screen and (max-width: 950px) {
+    & {
+      top: 1.4rem;
+      right: 1rem;
+      left: unset;
+
+    }
 
     &.active {
-      max-width: 50%;
-      max-height: 10%;
+      max-width: 100%;
     }
   }
 
@@ -58,21 +74,6 @@
   @media screen and (max-height: 400px) {
     &.active {
       max-height: 100%;
-    }
-  }
-
-  @media screen and (max-width: 555px) {
-    & {
-      width: calc(100% - 1.2rem - .8rem);
-      height: fit-content;
-      min-width: calc(100% - 1.2rem - .8rem);
-      max-height: fit-content;
-      overflow: unset;
-      opacity: 1;
-    }
-
-    .btn-nav {
-      width: 100%;
     }
   }
 
@@ -115,6 +116,8 @@
   flex: .5;
   color: var(--white-text);
   background-color: var(--primary);
+  position: sticky;
+  top: 1rem;
   z-index: 20;
   padding: clamp(0.8rem, 0.548rem + 1.613vw, 1.15rem) clamp(0.8rem, 0.548rem + 1.613vw, 1.3rem);
   display: none;
@@ -127,10 +130,21 @@
   font-size: .9rem;
 
   @media screen and (max-width: 1050px) {
-    position: absolute;
+    position: fixed;
     top: 1rem;
     left: 1rem;
     min-height: 300px;
+  }
+
+  @media screen and (max-width: 950px) {
+    right: 1rem;
+    left: unset;
+  }
+
+  @media screen and (max-width: 555px) {
+    width: calc(100% - 1rem - clamp(0.8rem, 0.548rem + 1.613vw, 1.15rem));
+    max-width: 100%;
+    max-height: max(200px, 50vh);
   }
 
   header {

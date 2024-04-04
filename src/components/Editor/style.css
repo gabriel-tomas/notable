@@ -3,9 +3,13 @@
   transition: .15s margin-top;
 
   @media screen and (max-width: 1050px) {
-    margin-top: 4rem;
-    &.menu-opened {
+   /*  margin-top: 4rem; */
+    /* &.menu-opened {
       margin-top: 0;
-    }
+    } */
+  }
+
+  @media screen and (max-width: 555px) {
+    /* margin-top: 5rem; */
   }
 }
