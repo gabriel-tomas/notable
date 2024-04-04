@@ -2,6 +2,8 @@ import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 import * as pagesActions from '../store/modules/pages/actions';
+import * as currentPageID from '../store/modules/currentPageID/actions';
+
 import {
   ArticleDataProtocol,
   PagePayload,
@@ -9,18 +11,16 @@ import {
 
 export function FirstStart(
   pages: PagePayload[],
-  setId: React.Dispatch<React.SetStateAction<string>>,
   setContent: React.Dispatch<
     React.SetStateAction<Record<string, never> | ArticleDataProtocol>
   >,
 ) {
   const dispatch = useDispatch();
   if (pages.length === 0) {
-    console.log('ta vázio pages: ', pages);
     const id = nanoid();
     const content = {};
-    setId(id);
     setContent(content);
+    dispatch(currentPageID.setCurrentPageID({ id }));
     dispatch(pagesActions.setCreateNewPage({ id, content }));
   }
 }

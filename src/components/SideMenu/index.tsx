@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
 import { GoChevronRight, GoChevronLeft, GoPlus } from 'react-icons/go';
+import { nanoid } from 'nanoid';
 
 import * as menuActions from '../../store/modules/menu/actions';
+import * as pagesActions from '../../store/modules/pages/actions';
+import * as currentPageID from '../../store/modules/currentPageID/actions';
 
 import { GlobalState } from '../../store/modules/interfaces';
 import {
@@ -72,23 +75,29 @@ const Header = (props: DispatcherProtocol) => {
 const PagesModal = (props: DispatcherProtocol) => {
   const pages = useSelector((state: GlobalState) => state.pages.pages);
 
-  console.log(pages);
+  const handleCreateNewPage = () => {
+    const id = nanoid();
+    const content = {};
+    props.dispatcher(pagesActions.setCreateNewPage({ id, content }));
+  };
+
+  const handleChangePage = (id: string) => {
+    props.dispatcher(currentPageID.setCurrentPageID({ id }));
+    handleClosePages(props.dispatcher);
+  };
 
   return (
     <div id="pages">
       <Header dispatcher={props.dispatcher} />
       <div className="users-pages">
-        <button className="btn-create-page">
+        <button className="btn-create-page" onClick={handleCreateNewPage}>
           Criar nova página <GoPlus />
         </button>
-        {pages.map(
-          (page) =>
-            get(page, 'content.blocks.length', 0) > 0 && (
-              <button key={page.id}>
-                {get(page, 'content.blocks[0].data.text', null)}
-              </button>
-            ),
-        )}
+        {pages.map((page) => (
+          <button key={page.id} onClick={() => handleChangePage(page.id)}>
+            {get(page, 'content.blocks[0].data.text', null) || 'Untitled'}
+          </button>
+        ))}
       </div>
     </div>
   );

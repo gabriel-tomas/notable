@@ -21,25 +21,54 @@ function App() {
     (state: GlobalState) => state.menu.menuIsOpened,
   );
   const [editor, setEditor] = useState<EditorJS | null>(null);
-  const [currentPageID, setCurrentPageId] = useState('');
-  const [currentPageContent, setCurrentPageContent] = useState({});
-  const [userIsTyping, setUserIsTyping] = useState(false);
+  const [currentPageContent, setCurrentPageContent] = useState<
+    null | object | ArticleDataProtocol
+  >(null);
+  const [, /* userIsTyping */ setUserIsTyping] = useState(false);
   const [timeNotTyping, setTimeNotTyping] = useState<number | null>(null);
   const pages = useSelector((state: GlobalState) => state.pages.pages);
+  const currentPageID = useSelector(
+    (state: GlobalState) => state.currentPageID.currentPageID,
+  );
+  const [contentSeted, setContentSeted] = useState(false);
+  const [contentUpdated, setContentUpdated] = useState(false);
 
-  FirstStart(pages, setCurrentPageId, setCurrentPageContent);
+  FirstStart(pages, setCurrentPageContent);
+
+  const setCurrentContent = (contentUpdate?: boolean) => {
+    const currentContent = pages.find(
+      (page) => page.id === currentPageID,
+    )?.content;
+
+    if (currentContent) {
+      setCurrentPageContent(currentContent);
+      setContentSeted(true);
+      contentUpdate && setContentUpdated(true);
+    } else {
+      setCurrentPageContent({});
+      setContentSeted(true);
+      contentUpdate && setContentUpdated(true);
+    }
+  };
 
   useEffect(() => {
-    if (pages.length === 1) {
-      setCurrentPageId(pages[0].id);
-      setCurrentPageContent(pages[0].content);
-    }
-  }, [pages]);
+    setCurrentContent(true);
+  }, [currentPageID]);
+
+  useEffect(() => {
+    setCurrentContent();
+  }, [pages, currentPageID]);
+
+  /*   console.log(currentPageID, currentPageContent); */
 
   useEffect(() => {
     if (!currentPageID) return;
-    /*     console.log(editor); */
-    if (!editor && Object.keys(currentPageContent).length > 0) {
+    if (!contentSeted) return;
+    if (
+      !editor &&
+      currentPageContent &&
+      Object.keys(currentPageContent).length > 0
+    ) {
       setEditor(
         new EditorJS({
           holder: 'editor',
@@ -50,7 +79,11 @@ function App() {
           data: currentPageContent as ArticleDataProtocol,
         }),
       );
-    } else if (!editor && Object.keys(currentPageContent).length === 0) {
+    } else if (
+      !editor &&
+      currentPageContent &&
+      Object.keys(currentPageContent).length === 0
+    ) {
       setEditor(
         new EditorJS({
           holder: 'editor',
@@ -61,13 +94,25 @@ function App() {
         }),
       );
     }
+  }, [contentSeted, currentPageID, editor]);
 
-    /* console.log(currentPageID, currentPageContent); */
-
-    return () => {
-      editor && editor.destroy();
-    };
-  }, [currentPageID, editor]);
+  useEffect(() => {
+    if (
+      contentUpdated &&
+      currentPageContent &&
+      Object.keys(currentPageContent).length > 0
+    ) {
+      editor?.render(currentPageContent as ArticleDataProtocol);
+      setContentUpdated(false);
+    } else if (
+      contentUpdated &&
+      currentPageContent &&
+      Object.keys(currentPageContent).length === 0
+    ) {
+      editor?.clear();
+      setContentUpdated(false);
+    }
+  }, [contentUpdated]);
 
   const handleSave = () => {
     if (editor) {
@@ -76,6 +121,7 @@ function App() {
         .then((outputData) => {
           if (!currentPageID) {
             console.log("there's not ID");
+            return;
           }
           dispatch(
             pagesActions.setUpdatePageContent({
@@ -107,13 +153,16 @@ function App() {
   };
 
   return (
-    <div
-      id="editor"
-      className={`main-editor ${menuIsOpen ? 'menu-opened' : ''}`}
-      onInput={handleInputChanging}
-    >
-      {/* <button onClick={handleSave}>salvar</button> */}
-    </div>
+    currentPageID && (
+      <div
+        id="editor"
+        className={`main-editor ${menuIsOpen ? 'menu-opened' : ''}`}
+        onInput={handleInputChanging}
+        onMouseDown={handleInputChanging}
+      >
+        {/* <button onClick={handleSave}>salvar</button> */}
+      </div>
+    )
   );
 }
 

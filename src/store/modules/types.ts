@@ -6,3 +6,6 @@ export const SET_MENU_IS_CLOSED = 'SET_MENU_IS_CLOSED';
 export const CREATE_NEW_PAGE = 'CREATE_NEW_PAGE';
 export const DELETE_PAGE = 'DELETE_PAGE';
 export const UPDATE_PAGE_CONTENT = 'UPDATE_PAGE';
+
+// Current page ID
+export const SET_CURRENT_PAGE_ID = 'SET_CURRENT_PAGE_ID';

@@ -7,7 +7,7 @@ export default (reducers: Reducer<unknown, Action>) => {
     {
       key: 'Note-App',
       storage,
-      whitelist: ['pages'],
+      whitelist: ['pages', 'currentPageID'],
     },
     reducers,
   );

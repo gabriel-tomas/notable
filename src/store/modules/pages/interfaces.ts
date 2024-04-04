@@ -5,10 +5,15 @@ export interface ActionProtocol {
   payload: PagePayload;
 }
 
-export interface PagePayload {
+export interface PageIDPayload {
   id: string;
+}
+
+export interface PageContentPayload {
   content: ArticleDataProtocol | object;
 }
+
+export interface PagePayload extends PageIDPayload, PageContentPayload {}
 
 export interface ArticleDataProtocol {
   blocks: OutputBlockData<string, unknown>[];

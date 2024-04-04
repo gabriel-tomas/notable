@@ -9,10 +9,12 @@ export default (state = initialState, action: ActionProtocol) => {
   switch (action.type) {
     case types.CREATE_NEW_PAGE: {
       const newState = { ...state };
-      newState.pages.push({
+      const newArray = [...newState.pages];
+      newArray.push({
         id: action.payload.id,
         content: action.payload.content,
       });
+      newState.pages = newArray;
       return newState;
     }
 

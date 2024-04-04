@@ -43,6 +43,24 @@
     }
   }
 
+  @media screen and (max-height: 600px) {
+    &.active {
+      max-height: 30%;
+    }
+
+    @media screen and (min-width: 1050px) {
+      &.active {
+        max-height: 50%;
+      }
+    }
+  }
+
+  @media screen and (max-height: 400px) {
+    &.active {
+      max-height: 100%;
+    }
+  }
+
   @media screen and (max-width: 555px) {
     & {
       width: calc(100% - 1.2rem - .8rem);
