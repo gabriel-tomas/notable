@@ -57,7 +57,7 @@ function App() {
 
   useEffect(() => {
     setCurrentContent();
-  }, [pages, currentPageID]);
+  }, [pages]);
 
   /*   console.log(currentPageID, currentPageContent); */
 
@@ -159,6 +159,7 @@ function App() {
         className={`main-editor ${menuIsOpen ? 'menu-opened' : ''}`}
         onInput={handleInputChanging}
         onMouseDown={handleInputChanging}
+        onKeyUp={handleInputChanging}
       >
         {/* <button onClick={handleSave}>salvar</button> */}
       </div>
