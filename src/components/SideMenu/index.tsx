@@ -153,16 +153,26 @@ export default function SideMenu() {
         onMouseOver={handleOpenNav}
         onClick={handleOpenNav}
       >
-        <BtnMenu
-          className="btn-nav btn-open-menu"
-          handleFunc={() => handleOpenPages(dispatch)}
-          ArrowComponent={GoChevronRight}
-          dispatcher={dispatch}
-        />
-        <BtnNav className="btn-nav" handleFunc={() => {}} textInside="buscar" />
-        <BtnNav className="btn-nav" handleFunc={() => {}} textInside="sobre" />
+        <PagesModal dispatcher={dispatch} />
+        <div className="container-navs-btn">
+          <BtnMenu
+            className="btn-nav btn-open-menu"
+            handleFunc={() => handleOpenPages(dispatch)}
+            ArrowComponent={GoChevronRight}
+            dispatcher={dispatch}
+          />
+          <BtnNav
+            className="btn-nav"
+            handleFunc={() => {}}
+            textInside="buscar"
+          />
+          <BtnNav
+            className="btn-nav"
+            handleFunc={() => {}}
+            textInside="sobre"
+          />
+        </div>
       </div>
-      <PagesModal dispatcher={dispatch} />
     </>
   );
 }
