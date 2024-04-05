@@ -74,6 +74,12 @@
     }
   }
 
+  @media screen and (max-height: 500px) {
+    &.active {
+      max-height: 40%;
+    }
+  }
+
   @media screen and (max-height: 400px) {
     &.active {
       max-height: 100%;
