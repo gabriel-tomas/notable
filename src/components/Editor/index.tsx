@@ -14,6 +14,13 @@ import { ArticleDataProtocol } from '../../store/modules/pages/interfaces';
 
 import './style.css';
 
+const handleCloseNav = () => {
+  const elBtn = document.querySelector('.btn-open-nav')!;
+  elBtn.classList.remove('desactive');
+  const nav = document.querySelector('.main-nav');
+  nav?.classList.remove('active');
+};
+
 function App() {
   const dispatch = useDispatch();
 
@@ -160,6 +167,8 @@ function App() {
         onInput={handleInputChanging}
         onMouseDown={handleInputChanging}
         onKeyUp={handleInputChanging}
+        onFocus={handleCloseNav}
+        onTouchStart={handleCloseNav}
       >
         {/* <button onClick={handleSave}>salvar</button> */}
       </div>

@@ -1,97 +1,65 @@
-.main-nav-back-activator {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 1.6rem;
+.btn-open-nav {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 35px;
+  width: min(70px, 30%);
+  background-color: var(--primary4);
+  opacity: .9;
+  z-index: 2;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 
-  @media screen and (max-width: 950px) {
-    & {
-      right: 0;
-      left: unset;
-    }
+  svg {
+    height: 100%;
+    width: 20px;
+    color: var(--white);
+  }
 
-    &.active {
-      max-width: 100%;
-    }
+  &.desactive {
+    display: none;
   }
 }
 
 .main-nav {
   z-index: 21;
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  bottom: 1rem;
+  left: 50%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: .6rem;
   background-color: var(--primary4);
   padding: .8rem;
   border-radius: .6rem;
   width: 25px;
   height: 25px;
-  max-width: 0%;
-  max-height: 0%;
+  max-width: 100%;
+  max-height: fit-content;
   overflow: hidden;
   transition: .25s all;
-  opacity: .7;
-  filter: invert(50%);
+  opacity: 1;
+  filter: invert(0%);
   box-shadow: 0 0 12px rgba(0, 0, 0, .4);
+  height: fit-content;
+  z-index: 2;
+  width: min(650px, 92svw);
+  transform: translateX(-50%);
+  transition: none;
+  visibility: hidden;
 
   &.active {
-    width: fit-content;
-    height: fit-content;
-    max-width: 20%;
-    max-height: 30%;
-    opacity: 1;
-    filter: invert(0%);
+    visibility: visible;
+
     .btn-nav {
       display: flex;
     }
   }
 
-  @media screen and (max-width: 950px) {
-    & {
-      top: 1.4rem;
-      right: 1rem;
-      left: unset;
-
-    }
-
-    &.active {
-      max-width: 100%;
-    }
-  }
-
-  @media screen and (max-height: 600px) {
-    &.active {
-      max-height: 30%;
-    }
-
-    @media screen and (min-width: 1050px) {
-      &.active {
-        max-height: 50%;
-      }
-    }
-  }
-
-  @media screen and (max-height: 500px) {
-    &.active {
-      max-height: 40%;
-    }
-  }
-
-  @media screen and (max-height: 400px) {
-    &.active {
-      max-height: 100%;
-    }
-  }
-
-  &.desactive {
-    display: none;
-  }
-
   .btn-nav {
-    display: none;
+    display: flex;
+    width: 100%;
     align-items: center;
     color: var(--white-text);
     height: fit-content;
@@ -290,16 +258,4 @@
 
 #pages.active {
   display: flex;
-  animation: increaseToRight .15s;
-}
-
-@keyframes increaseToRight {
-  from {
-    opacity: 0;
-    filter: brightness(0%) ;
-  }
-  to {
-    opacity: 1;
-    filter: brightness(100%);
-  }
 }

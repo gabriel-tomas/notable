@@ -1,7 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
-import { GoChevronRight, GoChevronLeft, GoPlus, GoTrash } from 'react-icons/go';
+import {
+  GoChevronRight,
+  GoChevronLeft,
+  GoChevronUp,
+  GoPlus,
+  GoTrash,
+} from 'react-icons/go';
 import { nanoid } from 'nanoid';
 
 import * as menuActions from '../../store/modules/menu/actions';
@@ -25,15 +31,11 @@ const stopPropagation = <T extends React.SyntheticEvent>(e: T) => {
 };
 
 const handleOpenPages = (dispatch: BtnDispatcher) => {
-  const nav = document.querySelector('.main-nav');
-  nav?.classList.add('desactive');
   document.getElementById('pages')?.classList.add('active');
   dispatch(menuActions.setMenuIsOpen());
 };
 
 const handleClosePages = (dispatch: BtnDispatcher) => {
-  const nav = document.querySelector('.main-nav');
-  nav?.classList.remove('desactive');
   document.getElementById('pages')?.classList.remove('active');
   dispatch(menuActions.setMenuIsClosed());
 };
@@ -41,11 +43,8 @@ const handleClosePages = (dispatch: BtnDispatcher) => {
 const handleOpenNav = () => {
   const nav = document.querySelector('.main-nav');
   nav?.classList.add('active');
-};
-
-const handleCloseNav = () => {
-  const nav = document.querySelector('.main-nav');
-  nav?.classList.remove('active');
+  const elBtn = document.querySelector('.btn-open-nav')!;
+  elBtn.classList.add('desactive');
 };
 
 const BtnMenu = (props: BtnMenuProtocol & DispatcherProtocol): JSX.Element => (
@@ -135,21 +134,23 @@ const PagesModal = (props: DispatcherProtocol) => {
   );
 };
 
+const BtnNavMobile = () => {
+  return (
+    <button className="btn-open-nav" onClick={handleOpenNav}>
+      <GoChevronUp />
+    </button>
+  );
+};
+
 export default function SideMenu() {
   const dispatch = useDispatch();
 
   return (
     <>
+      <BtnNavMobile />
       <div
-        className="main-nav-back-activator"
+        className="main-nav nav-mobile"
         onMouseOver={handleOpenNav}
-        onMouseLeave={handleCloseNav}
-        onClick={handleOpenNav}
-      ></div>
-      <div
-        className="main-nav"
-        onMouseOver={handleOpenNav}
-        onMouseLeave={handleCloseNav}
         onClick={handleOpenNav}
       >
         <BtnMenu
