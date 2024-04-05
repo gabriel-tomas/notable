@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 
 import * as menuActions from '../../store/modules/menu/actions';
 import * as pagesActions from '../../store/modules/pages/actions';
-import * as currentPageID from '../../store/modules/currentPageID/actions';
+import * as currentPageIDActions from '../../store/modules/currentPageID/actions';
 
 import specialCharactersChange from '../../utils/specialCharactersChange';
 
@@ -81,6 +81,9 @@ const Header = (props: DispatcherProtocol) => {
 
 const PagesModal = (props: DispatcherProtocol) => {
   const pages = useSelector((state: GlobalState) => state.pages.pages);
+  const currentPageID = useSelector(
+    (state: GlobalState) => state.currentPageID.currentPageID,
+  );
 
   const handleCreateNewPage = () => {
     const id = nanoid();
@@ -90,10 +93,15 @@ const PagesModal = (props: DispatcherProtocol) => {
 
   const handleDeletePage = (id: string) => {
     props.dispatcher(pagesActions.deletePage({ id }));
+    if (currentPageID === id) {
+      props.dispatcher(
+        currentPageIDActions.setCurrentPageID({ id: pages[0].id }),
+      );
+    }
   };
 
   const handleChangePage = (id: string) => {
-    props.dispatcher(currentPageID.setCurrentPageID({ id }));
+    props.dispatcher(currentPageIDActions.setCurrentPageID({ id }));
     handleClosePages(props.dispatcher);
   };
 
