@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
 import { GoChevronRight, GoChevronLeft, GoPlus, GoTrash } from 'react-icons/go';
@@ -18,7 +19,6 @@ import {
 } from './interfaces';
 
 import './style.css';
-import React from 'react';
 
 const stopPropagation = <T extends React.SyntheticEvent>(e: T) => {
   e.stopPropagation();
@@ -106,9 +106,11 @@ const PagesModal = (props: DispatcherProtocol) => {
         </button>
         {pages.map((page) => (
           <button key={page.id} onClick={() => handleChangePage(page.id)}>
-            {specialCharactersChange(
-              get(page, 'content.blocks[0].data.text', null),
-            ) || 'Untitled'}
+            <span className="page-name">
+              {specialCharactersChange(
+                get(page, 'content.blocks[0].data.text', null),
+              ) || 'Untitled'}
+            </span>
             <span
               onClick={(e) => {
                 stopPropagation(e);

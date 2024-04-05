@@ -222,6 +222,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 2rem;
+
+      .page-name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
 
       .btn-delete-page {
         display: none;
