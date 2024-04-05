@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
-import { GoChevronRight, GoChevronLeft, GoPlus } from 'react-icons/go';
+import { GoChevronRight, GoChevronLeft, GoPlus, GoTrash } from 'react-icons/go';
 import { nanoid } from 'nanoid';
 
 import * as menuActions from '../../store/modules/menu/actions';
@@ -18,6 +18,11 @@ import {
 } from './interfaces';
 
 import './style.css';
+import React from 'react';
+
+const stopPropagation = <T extends React.SyntheticEvent>(e: T) => {
+  e.stopPropagation();
+};
 
 const handleOpenPages = (dispatch: BtnDispatcher) => {
   const nav = document.querySelector('.main-nav');
@@ -83,6 +88,10 @@ const PagesModal = (props: DispatcherProtocol) => {
     props.dispatcher(pagesActions.setCreateNewPage({ id, content }));
   };
 
+  const handleDeletePage = (id: string) => {
+    props.dispatcher(pagesActions.deletePage({ id }));
+  };
+
   const handleChangePage = (id: string) => {
     props.dispatcher(currentPageID.setCurrentPageID({ id }));
     handleClosePages(props.dispatcher);
@@ -100,6 +109,15 @@ const PagesModal = (props: DispatcherProtocol) => {
             {specialCharactersChange(
               get(page, 'content.blocks[0].data.text', null),
             ) || 'Untitled'}
+            <span
+              onClick={(e) => {
+                stopPropagation(e);
+                handleDeletePage(page.id);
+              }}
+              className="btn-delete-page"
+            >
+              <GoTrash />
+            </span>
           </button>
         ))}
       </div>

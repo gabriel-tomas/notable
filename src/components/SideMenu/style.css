@@ -212,16 +212,42 @@
       border-radius: 1rem;
     }
 
-    button {
+    & > button {
       width: 100%;
       color: var(--white-text);
       font-size: inherit;
       text-align: left;
       padding: .3rem;
       border-radius: .2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .btn-delete-page {
+        display: none;
+        justify-content: center;
+        align-items: center;
+
+        @media (hover: none) {
+          & {
+            display: flex;
+          }
+        }
+
+        &:active {
+          svg {
+            transform: scale(.9);
+          }
+        }
+
+        svg {
+          height: 100%;
+          color: var(--white-text);
+        }
+      }
     }
 
-    button.btn-create-page {
+    & > button.btn-create-page {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -233,11 +259,17 @@
       }
     }
 
-    button:hover {
+    & > button:hover {
       background-color: var(--primary2);
+
+      @media (hover: hover) {
+        .btn-delete-page {
+          display: flex;
+        }
+      }
     }
 
-    button:active {
+    & > button:active {
       background-color: var(--primary3);
     }
   }

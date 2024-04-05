@@ -18,6 +18,15 @@ export default (state = initialState, action: ActionProtocol) => {
       return newState;
     }
 
+    case types.DELETE_PAGE: {
+      const newState = { ...state };
+      const newArray = [...newState.pages];
+      newState.pages = newArray.filter((page) => {
+        return page.id !== action.payload.id;
+      });
+      return newState;
+    }
+
     case types.UPDATE_PAGE_CONTENT: {
       const newState = { ...state };
       newState.pages = newState.pages.map((page) => {
