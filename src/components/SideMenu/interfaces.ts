@@ -4,7 +4,7 @@ import { UnknownAction } from 'redux';
 
 export interface BtnMenuProtocol {
   className: string;
-  handleFunc: (dispatch: BtnDispatcher) => void;
+  handleFunc: () => void;
   ArrowComponent: typeof GoChevronRight | typeof GoChevronLeft;
 }
 
@@ -17,5 +17,3 @@ export interface BtnNavProtocol {
 export interface DispatcherProtocol {
   dispatcher: Dispatch<UnknownAction>;
 }
-
-export type BtnDispatcher = Dispatch<UnknownAction>;

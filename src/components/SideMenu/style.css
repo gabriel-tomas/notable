@@ -7,7 +7,7 @@
   width: min(70px, 30%);
   background-color: var(--primary4);
   opacity: .9;
-  z-index: 2;
+  z-index: 1;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 

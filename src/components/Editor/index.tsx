@@ -9,24 +9,16 @@ import * as pagesActions from '../../store/modules/pages/actions';
 
 import { FirstStart } from '../../hooks/firstStart';
 
+import { handleCloseNav } from '../../utils/eventHandlers/handlesSideMenu';
+
 import { GlobalState } from '../../store/modules/interfaces';
 import { ArticleDataProtocol } from '../../store/modules/pages/interfaces';
 
 import './style.css';
 
-const handleCloseNav = () => {
-  const elBtn = document.querySelector('.btn-open-nav')!;
-  elBtn.classList.remove('desactive');
-  const nav = document.querySelector('.main-nav');
-  nav?.classList.remove('active');
-};
-
 function App() {
   const dispatch = useDispatch();
 
-  const menuIsOpen = useSelector(
-    (state: GlobalState) => state.menu.menuIsOpened,
-  );
   const [editor, setEditor] = useState<EditorJS | null>(null);
   const [currentPageContent, setCurrentPageContent] = useState<
     null | object | ArticleDataProtocol
@@ -163,7 +155,7 @@ function App() {
     currentPageID && (
       <div
         id="editor"
-        className={`main-editor ${menuIsOpen ? 'menu-opened' : ''}`}
+        className={`main-editor`}
         onInput={handleInputChanging}
         onMouseDown={handleInputChanging}
         onKeyUp={handleInputChanging}

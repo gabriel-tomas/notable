@@ -10,9 +10,16 @@ import {
 } from 'react-icons/go';
 import { nanoid } from 'nanoid';
 
-import * as menuActions from '../../store/modules/menu/actions';
 import * as pagesActions from '../../store/modules/pages/actions';
 import * as currentPageIDActions from '../../store/modules/currentPageID/actions';
+
+import {
+  /* handleOpenPages, */
+  handleClosePages,
+  handleTogglePages,
+  handleOpenNav,
+  handleCloseNav,
+} from '../../utils/eventHandlers/handlesSideMenu';
 
 import specialCharactersChange from '../../utils/specialCharactersChange';
 
@@ -20,7 +27,6 @@ import { GlobalState } from '../../store/modules/interfaces';
 import {
   BtnMenuProtocol,
   DispatcherProtocol,
-  BtnDispatcher,
   BtnNavProtocol,
 } from './interfaces';
 
@@ -30,28 +36,8 @@ const stopPropagation = <T extends React.SyntheticEvent>(e: T) => {
   e.stopPropagation();
 };
 
-const handleOpenPages = (dispatch: BtnDispatcher) => {
-  document.getElementById('pages')?.classList.add('active');
-  dispatch(menuActions.setMenuIsOpen());
-};
-
-const handleClosePages = (dispatch: BtnDispatcher) => {
-  document.getElementById('pages')?.classList.remove('active');
-  dispatch(menuActions.setMenuIsClosed());
-};
-
-const handleOpenNav = () => {
-  const nav = document.querySelector('.main-nav');
-  nav?.classList.add('active');
-  const elBtn = document.querySelector('.btn-open-nav')!;
-  elBtn.classList.add('desactive');
-};
-
-const BtnMenu = (props: BtnMenuProtocol & DispatcherProtocol): JSX.Element => (
-  <button
-    className={props.className}
-    onClick={() => props.handleFunc(props.dispatcher)}
-  >
+const BtnMenu = (props: BtnMenuProtocol): JSX.Element => (
+  <button className={props.className} onClick={props.handleFunc}>
     menu
     <props.ArrowComponent />
   </button>
@@ -64,15 +50,14 @@ const BtnNav = (props: BtnNavProtocol): JSX.Element => (
   </button>
 );
 
-const Header = (props: DispatcherProtocol) => {
+const Header = () => {
   return (
     <header>
       <h1>Minhas páginas</h1>
       <BtnMenu
         className="btn-close-menu"
-        handleFunc={() => handleClosePages(props.dispatcher)}
+        handleFunc={handleClosePages}
         ArrowComponent={GoChevronLeft}
-        dispatcher={props.dispatcher}
       />
     </header>
   );
@@ -101,12 +86,13 @@ const PagesModal = (props: DispatcherProtocol) => {
 
   const handleChangePage = (id: string) => {
     props.dispatcher(currentPageIDActions.setCurrentPageID({ id }));
-    handleClosePages(props.dispatcher);
+    handleClosePages();
+    setTimeout(() => handleCloseNav(), 0);
   };
 
   return (
     <div id="pages">
-      <Header dispatcher={props.dispatcher} />
+      <Header />
       <div className="users-pages">
         <button className="btn-create-page" onClick={handleCreateNewPage}>
           Criar nova página <GoPlus />
@@ -134,7 +120,7 @@ const PagesModal = (props: DispatcherProtocol) => {
   );
 };
 
-const BtnNavMobile = () => {
+const BtnNavOpen = () => {
   return (
     <button className="btn-open-nav" onClick={handleOpenNav}>
       <GoChevronUp />
@@ -147,9 +133,9 @@ export default function SideMenu() {
 
   return (
     <>
-      <BtnNavMobile />
+      <BtnNavOpen />
       <div
-        className="main-nav nav-mobile"
+        className="main-nav"
         onMouseOver={handleOpenNav}
         onClick={handleOpenNav}
       >
@@ -157,9 +143,8 @@ export default function SideMenu() {
         <div className="container-navs-btn">
           <BtnMenu
             className="btn-nav btn-open-menu"
-            handleFunc={() => handleOpenPages(dispatch)}
+            handleFunc={handleTogglePages}
             ArrowComponent={GoChevronRight}
-            dispatcher={dispatch}
           />
           <BtnNav
             className="btn-nav"
