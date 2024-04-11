@@ -1,8 +1,29 @@
-/* import { useEffect, useState } from 'react'; */
 'strict';
-import { useSelector, useDispatch } from 'react-redux';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import SimpleImage from '@editorjs/simple-image';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Checklist from '@editorjs/checklist';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import List from '@editorjs/list';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Embed from '@editorjs/embed';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Table from '@editorjs/table';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import CodeTool from '@editorjs/code';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Underline from '@editorjs/underline';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import * as pagesActions from '../../store/modules/pages/actions';
@@ -15,6 +36,26 @@ import { GlobalState } from '../../store/modules/interfaces';
 import { ArticleDataProtocol } from '../../store/modules/pages/interfaces';
 
 import './style.css';
+
+const editorJsTools = {
+  header: Header,
+  image: SimpleImage,
+  checklist: {
+    class: Checklist,
+    inlineToolbar: true,
+  },
+  list: {
+    class: List,
+    inlineToolbar: true,
+    config: {
+      defaultStyle: 'unordered',
+    },
+  },
+  embed: Embed,
+  table: Table,
+  code: CodeTool,
+  underline: Underline,
+};
 
 function App() {
   const dispatch = useDispatch();
@@ -72,9 +113,7 @@ function App() {
         new EditorJS({
           holder: 'editor',
           placeholder: 'type / for commands',
-          tools: {
-            header: Header,
-          },
+          tools: editorJsTools,
           data: currentPageContent as ArticleDataProtocol,
         }),
       );
@@ -87,9 +126,7 @@ function App() {
         new EditorJS({
           holder: 'editor',
           placeholder: 'type / for commands',
-          tools: {
-            header: Header,
-          },
+          tools: editorJsTools,
         }),
       );
     }
