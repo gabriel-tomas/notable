@@ -7,7 +7,7 @@
   width: min(70px, 30%);
   background-color: var(--primary4);
   opacity: .9;
-  z-index: 1;
+  z-index: 2;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 
@@ -20,6 +20,10 @@
   &.desactive {
     display: none;
   }
+}
+
+.main-layout:has(#editor > div > div.ce-toolbar.ce-toolbar--opened > div > div > div.ce-settings > div > div.ce-popover.ce-popover--open-top.ce-popover--opened) > .btn-open-nav  {
+  z-index: 1;
 }
 
 .btn-open-nav:active {
@@ -51,6 +55,8 @@
   width: min(70px, 30%);
   transition: .4s max-height, .1s width, .3s opacity, .3s bottom;
 
+
+
   &.active {
     visibility: visible;
     opacity: 1;
@@ -58,6 +64,10 @@
     max-height: 50%;
     width: min(650px, 92svw);
     bottom: 1rem;
+
+    @media screen and (max-height: 372px) {
+      max-height: 100%;
+    }
   }
 
   .container-navs-btn {
@@ -160,6 +170,26 @@
     overflow-y: auto;
     padding-right: .3rem;
     padding-bottom: 1rem;
+
+    @media screen and (max-height: 788px) {
+      max-height: 25vh;
+    }
+
+    @media screen and (max-height: 636px) {
+      max-height: 20vh;
+    }
+
+    @media screen and (max-height: 528px) {
+      max-height: 15vh;
+    }
+
+    @media screen and (max-height: 447px) {
+      max-height: 10vh;
+    }
+
+    @media screen and (max-height: 372px) {
+      max-height: 35vh;
+    }
 
     &::-webkit-scrollbar {
       width: 7px;
