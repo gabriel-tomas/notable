@@ -1,0 +1,114 @@
+.btn-open-nav {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 35px;
+  width: min(70px, 30%);
+  background-color: var(--primary4);
+  opacity: .9;
+  z-index: 2;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  svg {
+    height: 100%;
+    width: 20px;
+    color: var(--white);
+  }
+
+  &.desactive {
+    display: none;
+  }
+}
+
+.main-layout:has(#editor > div > div.ce-toolbar.ce-toolbar--opened > div > div > div.ce-settings > div > div.ce-popover.ce-popover--open-top.ce-popover--opened) > .btn-open-nav  {
+  z-index: 1;
+}
+
+.btn-open-nav:active {
+  background-color: var(--primary5);
+}
+
+.main-nav {
+  z-index: 21;
+  position: fixed;
+  bottom: 0rem;
+  left: 50%;
+  background-color: var(--primary4);
+  padding: .8rem;
+  border-radius: .6rem;
+  overflow: hidden;
+  transition: .25s all;
+  opacity: 1;
+  filter: invert(0%);
+  box-shadow: 0 0 12px rgba(0, 0, 0, .4);
+  z-index: 2;
+  /* height: fit-content;
+  width: min(650px, 92svw); */
+  transform: translateX(-50%);
+  transition: none;
+  visibility: hidden;
+  height: 0px;
+  opacity: .3;
+  max-height: 0px;
+  width: min(70px, 30%);
+  transition: .4s max-height, .1s width, .3s opacity, .3s bottom;
+
+
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+    height: fit-content;
+    max-height: 50%;
+    width: min(650px, 92svw);
+    bottom: 1rem;
+
+    @media screen and (max-height: 372px) {
+      max-height: 100%;
+    }
+  }
+
+  .container-navs-btn {
+    display: flex;
+    flex-direction: row;
+    gap: .6rem;
+
+    .btn-nav {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      color: var(--white-text);
+      height: fit-content;
+      padding: .5rem;
+      border-radius: .4rem;
+      background-color: var(--primary);
+      font-size: .9rem;
+      transition: background-color .25s;
+      justify-content: space-between;
+      gap: .13rem;
+
+      svg {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+
+
+  @media (hover: hover) {
+    .container-navs-btn {
+      .btn-nav:hover {
+        background-color: var(--primary2);
+        filter: drop-shadow(0px 0px 5px rgba(0,0,0,.2));
+      }
+    }
+  }
+
+  .container-navs-btn {
+    .btn-nav:active {
+      background-color: var(--primary3);
+    }
+  }
+}

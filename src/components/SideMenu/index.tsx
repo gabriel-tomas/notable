@@ -15,38 +15,30 @@ import * as currentPageIDActions from '../../store/modules/currentPageID/actions
 
 import {
   /* handleOpenPages, */
-  handleClosePages,
-  handleTogglePages,
   handleOpenNav,
   handleCloseNav,
+  handleClosePages,
+  handleTogglePages,
+  handleOpenSearch,
 } from '../../utils/eventHandlers/handlesSideMenu';
 
 import specialCharactersChange from '../../utils/specialCharactersChange';
 
 import { GlobalState } from '../../store/modules/interfaces';
-import {
-  BtnMenuProtocol,
-  DispatcherProtocol,
-  BtnNavProtocol,
-} from './interfaces';
+import { DispatcherProtocol, BtnNavProtocol } from './interfaces';
 
-import './style.css';
+import './styles/nav.css';
+import './styles/pages.css';
+import './styles/search.css';
 
 const stopPropagation = <T extends React.SyntheticEvent>(e: T) => {
   e.stopPropagation();
 };
 
-const BtnMenu = (props: BtnMenuProtocol): JSX.Element => (
-  <button className={props.className} onClick={props.handleFunc}>
-    menu
-    <props.ArrowComponent />
-  </button>
-);
-
 const BtnNav = (props: BtnNavProtocol): JSX.Element => (
   <button className={props.className} onClick={props.handleFunc}>
-    {props.textInside}
-    <GoChevronRight />
+    {props.textInside ? props.textInside : null}
+    <props.ArrowComponent />
   </button>
 );
 
@@ -54,7 +46,7 @@ const Header = () => {
   return (
     <header>
       <h1>Minhas páginas</h1>
-      <BtnMenu
+      <BtnNav
         className="btn-close-menu"
         handleFunc={handleClosePages}
         ArrowComponent={GoChevronLeft}
@@ -63,7 +55,15 @@ const Header = () => {
   );
 };
 
-const PagesModal = (props: DispatcherProtocol) => {
+const BtnNavOpen = () => {
+  return (
+    <button className="btn-open-nav" onClick={handleOpenNav}>
+      <GoChevronUp />
+    </button>
+  );
+};
+
+const PagesBox = (props: DispatcherProtocol) => {
   const pages = useSelector((state: GlobalState) => state.pages.pages);
   const currentPageID = useSelector(
     (state: GlobalState) => state.currentPageID.currentPageID,
@@ -120,11 +120,11 @@ const PagesModal = (props: DispatcherProtocol) => {
   );
 };
 
-const BtnNavOpen = () => {
+const SearchBox = () => {
   return (
-    <button className="btn-open-nav" onClick={handleOpenNav}>
-      <GoChevronUp />
-    </button>
+    <div id="search">
+      <input type="text" placeholder="Pesquisar" />
+    </div>
   );
 };
 
@@ -139,22 +139,26 @@ export default function SideMenu() {
         onMouseOver={handleOpenNav}
         onClick={handleOpenNav}
       >
-        <PagesModal dispatcher={dispatch} />
+        <PagesBox dispatcher={dispatch} />
+        <SearchBox />
         <div className="container-navs-btn">
-          <BtnMenu
-            className="btn-nav btn-open-menu"
+          <BtnNav
+            className="btn-nav"
+            textInside="pages"
             handleFunc={handleTogglePages}
             ArrowComponent={GoChevronRight}
           />
           <BtnNav
             className="btn-nav"
-            handleFunc={() => {}}
             textInside="buscar"
+            handleFunc={handleOpenSearch}
+            ArrowComponent={GoChevronRight}
           />
           <BtnNav
             className="btn-nav"
-            handleFunc={() => {}}
             textInside="sobre"
+            handleFunc={() => {}}
+            ArrowComponent={GoChevronRight}
           />
         </div>
       </div>
