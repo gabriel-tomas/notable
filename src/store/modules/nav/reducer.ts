@@ -1,20 +1,20 @@
 import * as types from '../types';
 
 export const initialState = {
-  menuIsOpened: false,
+  navIsOpened: false,
 };
 
 export default (state = initialState, action: Record<string, unknown>) => {
   switch (action.type) {
-    case types.SET_MENU_IS_OPEN: {
+    case types.SET_NAV_IS_OPEN: {
       const newState = { ...state };
-      newState.menuIsOpened = true;
+      newState.navIsOpened = true;
       return newState;
     }
 
-    case types.SET_MENU_IS_CLOSED: {
+    case types.SET_NAV_IS_CLOSED: {
       const newState = { ...state };
-      newState.menuIsOpened = false;
+      newState.navIsOpened = false;
       return newState;
     }
 

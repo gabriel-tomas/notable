@@ -1,6 +1,5 @@
-import { Dispatch } from 'react';
+import { Dispatch, UnknownAction } from 'redux';
 import { GoChevronRight, GoChevronLeft } from 'react-icons/go';
-import { UnknownAction } from 'redux';
 
 export interface BtnNavProtocol {
   className: string;

@@ -1,18 +1,25 @@
+import { Dispatch, UnknownAction } from 'redux';
+
+import * as navActions from '../../store/modules/nav/actions';
+
 // handles NavModal
-export const handleOpenNav = () => {
+export const handleOpenNav = (dispatcher: Dispatch<UnknownAction>) => {
   const nav = document.querySelector('.main-nav');
   nav?.classList.add('active');
   const elBtn = document.querySelector('.btn-open-nav')!;
   elBtn.classList.add('desactive');
+  dispatcher(navActions.setNavIsOpen());
 };
 
-export const handleCloseNav = () => {
+export const handleCloseNav = (dispatcher: Dispatch<UnknownAction>) => {
   const elBtn = document.querySelector('.btn-open-nav')!;
   elBtn.classList.remove('desactive');
   const nav = document.querySelector('.main-nav')!;
   nav.classList.remove('active');
   handleClosePages();
   handleCloseSearch();
+  console.log(dispatcher);
+  dispatcher(navActions.setNavIsClosed());
 };
 
 // handles PagesBox

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import menu from './menu/reducer';
+import nav from './nav/reducer';
 import pages from './pages/reducer';
 import currentPageID from './currentPageID/reducer';
 
 export default combineReducers({
-  menu,
+  nav,
   pages,
   currentPageID,
 });

@@ -56,9 +56,12 @@ const Header = () => {
   );
 };
 
-const BtnNavOpen = () => {
+const BtnNavOpen = (props: DispatcherProtocol) => {
   return (
-    <button className="btn-open-nav" onClick={handleOpenNav}>
+    <button
+      className="btn-open-nav"
+      onClick={() => handleOpenNav(props.dispatcher)}
+    >
       <GoChevronUp />
     </button>
   );
@@ -88,7 +91,7 @@ const PagesBox = (props: DispatcherProtocol) => {
   const handleChangePage = (id: string) => {
     props.dispatcher(currentPageIDActions.setCurrentPageID({ id }));
     handleClosePages();
-    setTimeout(() => handleCloseNav(), 0);
+    setTimeout(() => handleCloseNav(props.dispatcher), 0);
   };
 
   return (
@@ -123,33 +126,44 @@ const PagesBox = (props: DispatcherProtocol) => {
 
 const SearchBox = () => {
   const pages = useSelector((state: GlobalState) => state.pages.pages);
+  const navOpen = useSelector((state: GlobalState) => state.nav.navIsOpened);
 
   const [results, setResults] = useState<PagePayload[]>([]);
 
-  const [inputSeachValue, setInputSeachValue] = useState('');
+  const [inputSearchValue, setInputSearchValue] = useState('');
 
   useEffect(() => {
-    if (!inputSeachValue) return;
+    if (!navOpen) return;
+    if (results.length !== 0) {
+      setResults([]);
+    }
+    if (inputSearchValue) {
+      setInputSearchValue('');
+    }
+  }, [navOpen]);
+
+  useEffect(() => {
+    if (!inputSearchValue) return;
     const delayDebounceFn = setTimeout(() => {
       const newResults: PagePayload[] = [];
       pages.forEach((page) => {
         if (
           get(page, 'content.blocks[0].data.text', 'Untitled').match(
-            new RegExp(`${inputSeachValue}`, 'i'),
+            new RegExp(`${inputSearchValue}`, 'i'),
           )
         ) {
           newResults.push(page);
         }
       });
       setResults(newResults);
-    }, 400);
+    }, 0);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [inputSeachValue]);
+  }, [inputSearchValue]);
 
   const handleInputSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInputSeachValue(value);
+    setInputSearchValue(value);
   };
 
   return (
@@ -168,6 +182,7 @@ const SearchBox = () => {
       <input
         type="text"
         placeholder="Pesquisar"
+        value={inputSearchValue}
         onChange={handleInputSearchChange}
       />
     </div>
@@ -179,11 +194,11 @@ export default function SideMenu() {
 
   return (
     <>
-      <BtnNavOpen />
+      <BtnNavOpen dispatcher={dispatch} />
       <div
         className="main-nav"
-        onMouseOver={handleOpenNav}
-        onClick={handleOpenNav}
+        onMouseOver={() => handleOpenNav(dispatch)}
+        onClick={() => handleOpenNav(dispatch)}
       >
         <PagesBox dispatcher={dispatch} />
         <SearchBox />

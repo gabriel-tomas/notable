@@ -196,8 +196,8 @@ function App() {
         onInput={handleInputChanging}
         onMouseDown={handleInputChanging}
         onKeyUp={handleInputChanging}
-        onFocus={handleCloseNav}
-        onTouchStart={handleCloseNav}
+        onFocus={() => handleCloseNav(dispatch)}
+        onTouchStart={() => handleCloseNav(dispatch)}
       >
         {/* <button onClick={handleSave}>salvar</button> */}
       </div>
