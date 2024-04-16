@@ -45,6 +45,16 @@ export const handleOpenSearch = () => {
   handleClosePages();
 };
 
+export const handleToggleSearch = () => {
+  const searchBox = document.getElementById('search') as HTMLDivElement;
+  searchBox.classList.toggle('active');
+  if (searchBox.classList.contains('active')) {
+    handleClosePages();
+    const input = document.querySelector('#input-search') as HTMLInputElement;
+    input.focus();
+  }
+};
+
 export const handleCloseSearch = () => {
   document.getElementById('search')?.classList.remove('active');
 };

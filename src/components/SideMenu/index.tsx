@@ -19,7 +19,7 @@ import {
   handleCloseNav,
   handleClosePages,
   handleTogglePages,
-  handleOpenSearch,
+  handleToggleSearch,
 } from '../../utils/eventHandlers/handlesSideMenu';
 
 import specialCharactersChange from '../../utils/specialCharactersChange';
@@ -173,17 +173,26 @@ const SearchBox = () => {
   return (
     <div id="search">
       <div className="results">
-        {results.map((page) => (
-          <button className="result-btn" key={page.id} onClick={() => {}}>
-            <span className="page-name">
-              {specialCharactersChange(
-                get(page, 'content.blocks[0].data.text', null),
-              ) || 'Untitled'}
+        {results.length > 0 ? (
+          results.map((page) => (
+            <button className="result-btn" key={page.id} onClick={() => {}}>
+              <span className="page-name">
+                {specialCharactersChange(
+                  get(page, 'content.blocks[0].data.text', null),
+                ) || 'Untitled'}
+              </span>
+            </button>
+          ))
+        ) : (
+          <div className="container-not-found">
+            <span className="not-found">
+              Página(s) não encontrada(s). Tente buscar.
             </span>
-          </button>
-        ))}
+          </div>
+        )}
       </div>
       <input
+        id="input-search"
         type="text"
         placeholder="Pesquisar"
         value={inputSearchValue}
@@ -216,7 +225,7 @@ export default function SideMenu() {
           <BtnNav
             className="btn-nav"
             textInside="buscar"
-            handleFunc={handleOpenSearch}
+            handleFunc={handleToggleSearch}
             ArrowComponent={GoChevronRight}
           />
           <BtnNav
