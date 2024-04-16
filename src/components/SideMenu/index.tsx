@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
 import {
@@ -26,6 +26,7 @@ import specialCharactersChange from '../../utils/specialCharactersChange';
 
 import { GlobalState } from '../../store/modules/interfaces';
 import { DispatcherProtocol, BtnNavProtocol } from './interfaces';
+import { PagePayload } from '../../store/modules/pages/interfaces';
 
 import './styles/nav.css';
 import './styles/pages.css';
@@ -121,9 +122,54 @@ const PagesBox = (props: DispatcherProtocol) => {
 };
 
 const SearchBox = () => {
+  const pages = useSelector((state: GlobalState) => state.pages.pages);
+
+  const [results, setResults] = useState<PagePayload[]>([]);
+
+  const [inputSeachValue, setInputSeachValue] = useState('');
+
+  useEffect(() => {
+    if (!inputSeachValue) return;
+    const delayDebounceFn = setTimeout(() => {
+      const newResults: PagePayload[] = [];
+      pages.forEach((page) => {
+        if (
+          get(page, 'content.blocks[0].data.text', 'Untitled').match(
+            new RegExp(`${inputSeachValue}`, 'i'),
+          )
+        ) {
+          newResults.push(page);
+        }
+      });
+      setResults(newResults);
+    }, 400);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [inputSeachValue]);
+
+  const handleInputSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputSeachValue(value);
+  };
+
   return (
     <div id="search">
-      <input type="text" placeholder="Pesquisar" />
+      <div className="results">
+        {results.map((page) => (
+          <button className="result-btn" key={page.id} onClick={() => {}}>
+            <span className="page-name">
+              {specialCharactersChange(
+                get(page, 'content.blocks[0].data.text', null),
+              ) || 'Untitled'}
+            </span>
+          </button>
+        ))}
+      </div>
+      <input
+        type="text"
+        placeholder="Pesquisar"
+        onChange={handleInputSearchChange}
+      />
     </div>
   );
 };
