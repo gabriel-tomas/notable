@@ -143,7 +143,11 @@ const SearchBox = () => {
   }, [navOpen]);
 
   useEffect(() => {
-    if (!inputSearchValue) return;
+    if (!inputSearchValue) {
+      setResults([]);
+      return;
+    }
+
     const delayDebounceFn = setTimeout(() => {
       const newResults: PagePayload[] = [];
       pages.forEach((page) => {

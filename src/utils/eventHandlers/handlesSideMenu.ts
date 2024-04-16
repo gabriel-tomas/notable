@@ -18,7 +18,6 @@ export const handleCloseNav = (dispatcher: Dispatch<UnknownAction>) => {
   nav.classList.remove('active');
   handleClosePages();
   handleCloseSearch();
-  console.log(dispatcher);
   dispatcher(navActions.setNavIsClosed());
 };
 
