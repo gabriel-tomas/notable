@@ -12,6 +12,7 @@ export const handleCloseNav = () => {
   const nav = document.querySelector('.main-nav')!;
   nav.classList.remove('active');
   handleClosePages();
+  handleCloseSearch();
 };
 
 // handles PagesBox
