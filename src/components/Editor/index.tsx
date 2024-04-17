@@ -9,7 +9,7 @@ import SimpleImage from '@editorjs/simple-image';
 import Checklist from '@editorjs/checklist';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import List from '@editorjs/list';
+import NestedList from '@editorjs/nested-list';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Embed from '@editorjs/embed';
@@ -45,7 +45,7 @@ const editorJsTools = {
     inlineToolbar: true,
   },
   list: {
-    class: List,
+    class: NestedList,
     inlineToolbar: true,
     config: {
       defaultStyle: 'unordered',
