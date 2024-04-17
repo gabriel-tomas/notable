@@ -24,6 +24,8 @@ import {
 
 import specialCharactersChange from '../../utils/specialCharactersChange';
 
+import AboutModal from '../AboutModal';
+
 import { GlobalState } from '../../store/modules/interfaces';
 import { DispatcherProtocol, BtnNavProtocol } from './interfaces';
 import { PagePayload } from '../../store/modules/pages/interfaces';
@@ -216,6 +218,10 @@ const SearchBox = (props: DispatcherProtocol) => {
 export default function SideMenu() {
   const dispatch = useDispatch();
 
+  const [openAbout, setOpenAbout] = React.useState(false);
+  const handleOpenAbout = () => setOpenAbout(true);
+  const handleCloseAbout = () => setOpenAbout(false);
+
   return (
     <>
       <BtnNavOpen dispatcher={dispatch} />
@@ -226,6 +232,12 @@ export default function SideMenu() {
       >
         <PagesBox dispatcher={dispatch} />
         <SearchBox dispatcher={dispatch} />
+        <AboutModal
+          open={openAbout}
+          setOpen={setOpenAbout}
+          handleOpen={handleOpenAbout}
+          handleClose={handleCloseAbout}
+        />
         <div className="container-navs-btn">
           <BtnNav
             className="btn-nav"
@@ -242,7 +254,7 @@ export default function SideMenu() {
           <BtnNav
             className="btn-nav"
             textInside="sobre"
-            handleFunc={() => {}}
+            handleFunc={handleOpenAbout}
             ArrowComponent={GoChevronRight}
           />
         </div>
