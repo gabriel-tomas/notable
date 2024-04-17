@@ -67,6 +67,12 @@ const BtnNavOpen = (props: DispatcherProtocol) => {
   );
 };
 
+const handleChangePage = (dispatcher: DispatcherProtocol, id: string) => {
+  dispatcher.dispatcher(currentPageIDActions.setCurrentPageID({ id }));
+  handleClosePages();
+  setTimeout(() => handleCloseNav(dispatcher.dispatcher), 0);
+};
+
 const PagesBox = (props: DispatcherProtocol) => {
   const pages = useSelector((state: GlobalState) => state.pages.pages);
   const currentPageID = useSelector(
@@ -88,12 +94,6 @@ const PagesBox = (props: DispatcherProtocol) => {
     }
   };
 
-  const handleChangePage = (id: string) => {
-    props.dispatcher(currentPageIDActions.setCurrentPageID({ id }));
-    handleClosePages();
-    setTimeout(() => handleCloseNav(props.dispatcher), 0);
-  };
-
   return (
     <div id="pages">
       <Header />
@@ -102,7 +102,12 @@ const PagesBox = (props: DispatcherProtocol) => {
           Criar nova página <GoPlus />
         </button>
         {pages.map((page) => (
-          <button key={page.id} onClick={() => handleChangePage(page.id)}>
+          <button
+            key={page.id}
+            onClick={() =>
+              handleChangePage({ dispatcher: props.dispatcher }, page.id)
+            }
+          >
             <span className="page-name">
               {specialCharactersChange(
                 get(page, 'content.blocks[0].data.text', null),
@@ -124,7 +129,7 @@ const PagesBox = (props: DispatcherProtocol) => {
   );
 };
 
-const SearchBox = () => {
+const SearchBox = (props: DispatcherProtocol) => {
   const pages = useSelector((state: GlobalState) => state.pages.pages);
   const navOpen = useSelector((state: GlobalState) => state.nav.navIsOpened);
 
@@ -175,7 +180,13 @@ const SearchBox = () => {
       <div className="results">
         {results.length > 0 ? (
           results.map((page) => (
-            <button className="result-btn" key={page.id} onClick={() => {}}>
+            <button
+              className="result-btn"
+              key={page.id}
+              onClick={() =>
+                handleChangePage({ dispatcher: props.dispatcher }, page.id)
+              }
+            >
               <span className="page-name">
                 {specialCharactersChange(
                   get(page, 'content.blocks[0].data.text', null),
@@ -214,7 +225,7 @@ export default function SideMenu() {
         onClick={() => handleOpenNav(dispatch)}
       >
         <PagesBox dispatcher={dispatch} />
-        <SearchBox />
+        <SearchBox dispatcher={dispatch} />
         <div className="container-navs-btn">
           <BtnNav
             className="btn-nav"
