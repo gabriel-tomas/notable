@@ -4,7 +4,7 @@ Projeto de um app de notas com gerenciamento das notas (criação e exclusão) e
 
 O app utiliza o [Editor.js](https://editorjs.io/) como editor de texto, um framework simples e fácil de se utilizar!
 
-![notable](https://github.com/gabriel-tomas/notable/tree/main/src/static/notable.gif)
+![notable](https://github.com/gabriel-tomas/notable/blob/main/src/static/notable.gif?raw=true)
 
 ## Tecnologias utilizadas
 
