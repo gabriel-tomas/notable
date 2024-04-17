@@ -1,5 +1,5 @@
 'strict';
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { ToolConstructable } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -38,7 +38,12 @@ import { ArticleDataProtocol } from '../../store/modules/pages/interfaces';
 import './style.css';
 
 const editorJsTools = {
-  header: Header,
+  header: {
+    class: Header as unknown as ToolConstructable,
+    config: {
+      defaultLevel: 1,
+    },
+  },
   image: SimpleImage,
   checklist: {
     class: Checklist,
