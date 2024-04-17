@@ -18,15 +18,3 @@ button, input {
 button {
   cursor: pointer;
 }
-
-a {
-  color: var(--secondary);
-}
-
-a:hover {
-  color: var(--secondary-07);
-}
-
-a:active {
-  color: var(--white);
-}

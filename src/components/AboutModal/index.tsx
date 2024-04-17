@@ -24,6 +24,13 @@ const style = {
       display: 'flex',
       alignItems: 'center',
       gap: '.15rem',
+      color: 'var(--secondary)',
+    },
+    'a:hover': {
+      color: 'var(--secondary-07)',
+    },
+    'a:active': {
+      color: 'var(--white)',
     },
   },
   '.container-about': {
