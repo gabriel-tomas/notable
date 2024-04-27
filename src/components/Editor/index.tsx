@@ -78,7 +78,9 @@ function App() {
   const [contentSeted, setContentSeted] = useState(false);
   const [contentUpdated, setContentUpdated] = useState(false);
 
-  FirstStart(pages, setCurrentPageContent);
+  useEffect(() => {
+    FirstStart(pages, setCurrentPageContent, dispatch);
+  }, [pages]);
 
   const setCurrentContent = (contentUpdate?: boolean) => {
     const currentContent = pages.find(

@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 import * as pagesActions from '../store/modules/pages/actions';
@@ -8,14 +7,16 @@ import {
   ArticleDataProtocol,
   PagePayload,
 } from '../store/modules/pages/interfaces';
+import { Dispatch } from 'react';
+import { UnknownAction } from 'redux';
 
 export function FirstStart(
   pages: PagePayload[],
   setContent: React.Dispatch<
     React.SetStateAction<Record<string, never> | ArticleDataProtocol>
   >,
+  dispatch: Dispatch<UnknownAction>,
 ) {
-  const dispatch = useDispatch();
   if (pages.length === 0) {
     const id = nanoid();
     const content = {};

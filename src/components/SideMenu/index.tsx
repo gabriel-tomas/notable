@@ -89,7 +89,13 @@ const PagesBox = (props: DispatcherProtocol) => {
 
   const handleDeletePage = (id: string) => {
     props.dispatcher(pagesActions.deletePage({ id }));
-    if (currentPageID === id) {
+    if (currentPageID === id && pages.length > 1) {
+      if (id === pages[0].id) {
+        props.dispatcher(
+          currentPageIDActions.setCurrentPageID({ id: pages[1].id }),
+        );
+        return;
+      }
       props.dispatcher(
         currentPageIDActions.setCurrentPageID({ id: pages[0].id }),
       );
